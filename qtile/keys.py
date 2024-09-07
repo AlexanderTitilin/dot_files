@@ -8,8 +8,9 @@ mod = "mod4"
 terminal = "alacritty"
 launcher_command = 'rofi -font "JetBrais Mono 20" -show run'
 keys = [
-    Key([mod, "shift"], "space", lazy.window.toggle_floating()),
-    Key([mod], "f", lazy.window.toggle_fullscreen()),
+    Key([mod, "shift"], "space",
+        lazy.window.toggle_floating(), desc="Toggle floating"),
+    Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle_fullscreen"),
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
@@ -27,35 +28,26 @@ keys = [
     ),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-    KeyChord([mod], "m",
-             [
-        Key([], 'j', lazy.next_screen()),
-    ]),
-    Key([mod, "control"], "j", lazy.layout.shrink()),
-    Key([mod, "control"], "k", lazy.layout.grow()),
-    Key([mod], "n", lazy.layout.normalize()),
-    Key([mod], "o", lazy.layout.maximize()),
+    Key([mod, "control"], "j", lazy.layout.shrink(), desc="Shrink window"),
+    Key([mod, "control"], "k", lazy.layout.grow(), desc="Grow window"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod, "shift"], "Tab", lazy.prev_layout()),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod], "d", lazy.spawn(launcher_command)),
+    Key([mod], "d", lazy.spawn(launcher_command), desc="Run rofi"),
     Key(
         [mod], "0", lazy.spawn(
-            "rofi -show power-menu -modi power-menu:rofi-power-menu")
-    ),
-    Key([mod], "s", lazy.spawn("i3-scrot")),
+            "rofi -show power-menu -modi power-menu:rofi-power-menu"),
+        desc="Run rofi-power-menu"),
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "s", lazy.spawn("i3-scrot -s")),
-    Key([mod], "b", lazy.hide_show_bar()),
+    Key([mod], "b", lazy.hide_show_bar(), desc="Hide bar"),
     KeyChord(
         [mod],
         "a",
         [
-            Key([], "1", lazy.spawn("alacritty -e nvim")),
-            Key([], "2", lazy.spawn("firefox")),
-            Key([], "3", lazy.spawn("firefox web.telegram.org")),
-            Key([], "4", lazy.spawn("alacritty -e vifm")),
+            Key([], "1", lazy.spawn("alacritty -e nvim"), desc="Run neovim"),
+            Key([], "2", lazy.spawn("firefox"), desc="Run firefox"),
+            Key([], "3", lazy.spawn("firefox web.telegram.org"), desc="Run telegram"),
+            Key([], "4", lazy.spawn("alacritty -e vifm"), desc="Run vifm"),
         ],
     ),
 ]
