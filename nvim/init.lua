@@ -19,6 +19,7 @@ vim.opt.swapfile = false
 vim.opt.autochdir = true
 vim.opt.smartcase = true
 vim.opt.conceallevel = 1
+vim.opt.termguicolors = true
 vim.opt.relativenumber = true
 vim.opt.guifont = "JetBrainsMono Nerd Font:h14"
 vim.opt.completeopt = { 'menu', 'menuone' }
@@ -28,23 +29,52 @@ vim.g.maplocalleader = ','
 -- Plugin manager setup using lazy.nvim
 require('lazy').setup({
     -- Plugins
-    { 'norcalli/nvim-colorizer.lua' },
+    { 'norcalli/nvim-colorizer.lua',
+    	config = function()
+	    require("colorizer").setup()
+    	end
+   },
     { 'mfussenegger/nvim-dap' },
-    { 'mfussenegger/nvim-dap-python' },
+    { 'mfussenegger/nvim-dap-python', config = function()
+	    				require("dap-python").setup("python")
+    					end},
     { 'rebelot/kanagawa.nvim' },
     { 'jghauser/mkdir.nvim' },
-    { 'Pocco81/auto-save.nvim' },
-    { 'kylechui/nvim-surround' },
-    { 'kyazdani42/nvim-tree.lua' },
-    { 'tpope/vim-surround' },
-    { 'alvarosevilla95/luatab.nvim' },
-    { 'nvim-lualine/lualine.nvim' },
+    { 'Pocco81/auto-save.nvim',opts = {} },
+    { 'kylechui/nvim-surround',opts = {} },
+    { 'kyazdani42/nvim-tree.lua',opts = {} },
+    { 'alvarosevilla95/luatab.nvim',opts = {} },
+    { 'nvim-lualine/lualine.nvim',
+    	opts =
+    		{options ={ theme="gruvbox-material" }} },
     { 'quangnguyen30192/cmp-nvim-ultisnips' },
-    { 's1n7ax/nvim-terminal' },
-    { 'numToStr/Comment.nvim' },
-    { 'windwp/nvim-autopairs' },
-    { 'nvim-telescope/telescope.nvim', dependencies = { 'nvim-lua/plenary.nvim' }},
-    { 'is0n/jaq-nvim' },
+    { 's1n7ax/nvim-terminal',opts = {{
+    	window = { position = 'rightbelow' }
+}} },
+    { 'numToStr/Comment.nvim',opts={} },
+    { 'windwp/nvim-autopairs',opts = {} },
+    { 'nvim-telescope/telescope.nvim',opts = {}, dependencies = { 'nvim-lua/plenary.nvim' }},
+    { 'is0n/jaq-nvim', opts = 
+    { cmds = {
+	    external = {
+		    python = "python %",
+		    cpp = "g++ % -o $fileBase -O2 -lfinal && $fileBase",
+		    javascript = "node %",
+		    scheme = "racket %",
+		    lisp = "sbcl --load %",
+		    haskell = "stack ghc % && ./$fileBase",
+		    html = "firefox %",
+		    java = "java %",
+		    lua = "lua %"
+	    }
+    },
+    ui = {
+	    startinsert = true,
+	    float = {
+		    border = "solid",
+		    blend = 1
+	    }
+    } }},
     { 'sbdchd/neoformat' },
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/cmp-buffer' },
@@ -53,7 +83,9 @@ require('lazy').setup({
     { 'hrsh7th/nvim-cmp' },
     { 'hrsh7th/cmp-nvim-lsp-signature-help' },
     { 'neovim/nvim-lspconfig' },
-    { 'nvim-treesitter/nvim-treesitter' },
+    { 'nvim-treesitter/nvim-treesitter',opts = {
+	    highlight = {enable = true}
+    } },
     { 'nvim-tree/nvim-web-devicons' },
     { 'lervag/vimtex' },
     { 'SirVer/ultisnips' },
@@ -95,7 +127,7 @@ cmp.setup({
     }
 })
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- LSP settings
 local lspconfig = require('lspconfig')
@@ -108,46 +140,6 @@ lspconfig.gdscript.setup {}
 lspconfig.pylsp.setup {}
 lspconfig.lua_ls.setup {}
 
--- Plugin setups
-require('jaq-nvim').setup({
-    cmds = {
-        external = {
-            python = "python %",
-            cpp = "g++ % -o $fileBase -O2 -lfinal && $fileBase",
-            javascript = "node %",
-            scheme = "racket %",
-            lisp = "sbcl --load %",
-            haskell = "stack ghc % && ./$fileBase",
-            html = "firefox %",
-            java = "java %",
-            lua = "lua %"
-        }
-    },
-    ui = {
-        startinsert = true,
-        float = {
-            border = "solid",
-            blend = 1
-        }
-    }
-})
-
-require('telescope').setup {}
-require('nvim-autopairs').setup {}
-require('Comment').setup {}
-require('nvim-terminal').setup({
-    window = { position = 'rightbelow' }
-})
-require('lualine').setup { options = { theme = 'gruvbox-material' } }
-require('luatab').setup {}
-require('nvim-tree').setup {}
-require('nvim-surround').setup {}
-require('auto-save').setup {}
-require('nvim-treesitter.configs').setup {
-    highlight = { enable = true }
-}
-require('dap-python').setup('python')
-require('colorizer').setup()
 
 -- Key mappings
 vim.api.nvim_set_keymap('n', '<Leader>s', ':split<CR>', { noremap = true, silent = true })
