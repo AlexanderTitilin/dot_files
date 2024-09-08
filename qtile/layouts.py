@@ -8,6 +8,7 @@ layout_config = {
 }
 layouts = [
     layout.MonadTall(**layout_config),
+    layout.Stack(**layout_config),
     layout.MonadWide(**layout_config),
     layout.Max(),
 ]

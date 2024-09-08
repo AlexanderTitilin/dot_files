@@ -1,8 +1,7 @@
-
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
-vim.api.nvim_set_keymap('n', '<Leader>s', ':split', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>v', ':vsplit', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>s', ':split ', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>v', ':vsplit ', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>c', ':Neoformat<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>j', ':tabprevious<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>k', ':tabnext<CR>', { noremap = true, silent = true })
