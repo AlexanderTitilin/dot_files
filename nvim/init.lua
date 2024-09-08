@@ -54,7 +54,7 @@ require('lazy').setup({
     { 'numToStr/Comment.nvim',opts={} },
     { 'windwp/nvim-autopairs',opts = {} },
     { 'nvim-telescope/telescope.nvim',opts = {}, dependencies = { 'nvim-lua/plenary.nvim' }},
-    { 'is0n/jaq-nvim', opts = 
+    { 'is0n/jaq-nvim', opts =
     { cmds = {
 	    external = {
 		    python = "python %",
@@ -127,18 +127,10 @@ cmp.setup({
     }
 })
 
--- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
--- LSP settings
 local lspconfig = require('lspconfig')
-lspconfig.racket_langserver.setup {}
 lspconfig.texlab.setup {}
-lspconfig.bashls.setup {}
-lspconfig.hls.setup {}
-lspconfig.clangd.setup {}
 lspconfig.gdscript.setup {}
 lspconfig.pylsp.setup {}
-lspconfig.lua_ls.setup {}
 
 
 -- Key mappings
