@@ -2,8 +2,6 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.config import Click, Drag, Group, Key, KeyChord
 from libqtile import qtile
-# from libqtile.backend.wayland import InputConfig
-# from libqtile.backend.wayland.core import Core
 mod = "mod4"
 terminal = "alacritty"
 launcher_command = 'rofi -font "JetBrais Mono 20" -show run'
@@ -51,7 +49,7 @@ keys = [
         ],
     ),
 ]
-workspases = ["a", "b", "c", "d"]
+workspases = ["a", "b", "c", "d","f","g"]
 groups = [Group(i) for i in workspases]
 
 
