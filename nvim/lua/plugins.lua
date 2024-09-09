@@ -14,7 +14,24 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require('lazy').setup({
-    -- Plugins
+{
+    "nvim-neorg/neorg",
+    lazy = false,
+    version = "*",
+    opts = {
+    load = {
+        ["core.defaults"] = {},
+	["core.concealer"] = {},
+        ["core.dirman"] = {
+            config = {
+                workspaces = {
+                    notes = "~/notes",
+                },
+            },
+        },
+    },
+},
+},
     { 'norcalli/nvim-colorizer.lua',
     	config = function()
 	    require("colorizer").setup()
@@ -34,9 +51,6 @@ require('lazy').setup({
     	opts =
     		{options ={ theme="gruvbox-material" }} },
     { 'quangnguyen30192/cmp-nvim-ultisnips' },
-    { 's1n7ax/nvim-terminal',opts = {{
-    	window = { position = 'rightbelow' }
-}} },
     { 'numToStr/Comment.nvim',opts={} },
     { 'windwp/nvim-autopairs',opts = {} },
     { 'nvim-telescope/telescope.nvim',opts = {}, dependencies = { 'nvim-lua/plenary.nvim' }},
@@ -69,7 +83,9 @@ require('lazy').setup({
     { 'hrsh7th/nvim-cmp' },
     { 'hrsh7th/cmp-nvim-lsp-signature-help' },
     { 'neovim/nvim-lspconfig' },
-    { 'nvim-treesitter/nvim-treesitter',opts = {
+    { 'nvim-treesitter/nvim-treesitter',
+    	build = ":TSUpdate",
+    	opts = {
 	    highlight = {enable = true}
     } },
     { 'nvim-tree/nvim-web-devicons' },
