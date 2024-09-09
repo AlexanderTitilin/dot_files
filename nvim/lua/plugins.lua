@@ -73,7 +73,11 @@ require('lazy').setup({
 	    highlight = {enable = true}
     } },
     { 'nvim-tree/nvim-web-devicons' },
-    { 'lervag/vimtex' },
+    { 'lervag/vimtex', config = function()
+vim.g.UltiSnipsExpandTrigger = '<tab>'
+vim.g.UltiSnipsJumpForwardTrigger = '<tab>'
+vim.g.UltiSnipsJumpBackwardTrigger = '<s-tab>'
+    end},
     { 'SirVer/ultisnips' },
 })
 

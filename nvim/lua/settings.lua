@@ -9,3 +9,5 @@ vim.opt.termguicolors = true
 vim.opt.relativenumber = true
 vim.opt.guifont = "JetBrainsMono Nerd Font:h14"
 vim.opt.completeopt = { 'menu', 'menuone' }
+
+

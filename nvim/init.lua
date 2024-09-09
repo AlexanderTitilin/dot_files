@@ -3,7 +3,6 @@ require("plugins")
 require("keymaps")
 require("colorscheme")
 require("vimtex")
-require("ultisnips")
 require("complete")
 require("lsp")
 -- vim.cmd [[colorscheme kanagawa]]
