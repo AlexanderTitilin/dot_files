@@ -46,7 +46,6 @@ screens = [
                     disable_drag=True,
                     hide_unused=True,
                 ),
-                # widget.WindowName(),
                 widget.Spacer(),
                 widget.Clock(format="%H:%M",
                              foreground=colors.color7),

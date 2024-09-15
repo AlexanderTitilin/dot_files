@@ -10,6 +10,5 @@ layouts = [
     layout.MonadTall(**layout_config),
     layout.Stack(**layout_config),
     layout.MonadWide(**layout_config),
-    layout.Max(),
 ]
 floating_layout = layout.Floating(border_width=0)

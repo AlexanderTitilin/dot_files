@@ -1,9 +1,8 @@
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.mouse = 'nvi'
-vim.opt.hlsearch = false
+vim.opt.ignorecase = true
 vim.opt.swapfile = false
 vim.opt.autochdir = true
-vim.opt.smartcase = true
 vim.opt.conceallevel = 1
 vim.opt.termguicolors = true
 vim.opt.relativenumber = true

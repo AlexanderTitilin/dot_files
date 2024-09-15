@@ -1,7 +1,19 @@
 
-snippet beg "begin{} / end{}" bA
-glBegin($1)
-$2
-glEnd()
-$0
+snippet nparr "nparr" iA
+np.array($1)$2
+endsnippet
+
+
+snippet spmat "spmat" iA
+sp.Matrix([$1]).reshape($2)$0
+endsnippet
+
+
+snippet gen "gen" iA
+[$3 for $1 in $2]$0
+endsnippet
+
+
+snippet \\ "frac" iA
+sp.Rational($1,$2)$0
 endsnippet

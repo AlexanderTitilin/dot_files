@@ -1,4 +1,3 @@
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -10,27 +9,49 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 
 require('lazy').setup({
 {
-    "nvim-neorg/neorg",
-    lazy = false,
-    version = "*",
-    opts = {
-    load = {
-        ["core.defaults"] = {},
-	["core.concealer"] = {},
-        ["core.dirman"] = {
-            config = {
-                workspaces = {
-                    notes = "~/notes",
-                },
-            },
-        },
-    },
+  "NeogitOrg/neogit",
+  dependencies = {
+    "nvim-lua/plenary.nvim",         
+    "sindrets/diffview.nvim",        
+
+    "nvim-telescope/telescope.nvim", 
+  },
+  config = true
 },
+{
+	'yamatsum/nvim-cursorline',
+	opts = {
+	cursorline = {
+    		enable = false,
+  		},
+  	cursorword = {
+    		enable = true,
+    		min_length = 3,
+    hl = { underline = true },
+  }
+	}
+},
+{
+    's1n7ax/nvim-terminal',
+    opts = {}
+},
+
+{
+  'nvim-orgmode/orgmode',
+  event = 'VeryLazy',
+  ft = { 'org' },
+  config = function()
+    require('orgmode').setup({
+      org_agenda_files = '~/orgfiles/**/*',
+      org_default_notes_file = '~/orgfiles/refile.org',
+    })
+  end,
 },
     { 'norcalli/nvim-colorizer.lua',
     	config = function()
@@ -61,6 +82,7 @@ require('lazy').setup({
 		    cpp = "g++ % -o $fileBase -O2 -lfinal && $fileBase",
 		    javascript = "node %",
 		    scheme = "racket %",
+		    racket = "racket %",
 		    lisp = "sbcl --load %",
 		    haskell = "stack ghc % && ./$fileBase",
 		    html = "firefox %",
@@ -85,9 +107,14 @@ require('lazy').setup({
     { 'neovim/nvim-lspconfig' },
     { 'nvim-treesitter/nvim-treesitter',
     	build = ":TSUpdate",
-    	opts = {
-	    highlight = {enable = true}
-    } },
+	config = function()
+		require("nvim-treesitter.configs").setup({
+			highlight = {
+				enable = true
+			}
+	})
+	end
+     },
     { 'nvim-tree/nvim-web-devicons' },
     { 'lervag/vimtex', config = function()
 vim.g.UltiSnipsExpandTrigger = '<tab>'
