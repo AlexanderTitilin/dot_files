@@ -2,9 +2,14 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.config import Click, Drag, Group, Key, KeyChord
 from libqtile import qtile
+from copy import deepcopy
 mod = "mod4"
 terminal = "alacritty"
 launcher_command = 'rofi -font "JetBrais Mono 20" -show run'
+browser = "firefox"
+
+
+
 keys = [
     Key([mod, "shift"], "space",
         lazy.window.toggle_floating(), desc="Toggle floating"),
@@ -24,7 +29,8 @@ keys = [
         lazy.layout.shuffle_right(),
         desc="Move window to the right",
     ),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
+    Key([mod, "shift"], "j", lazy.layout.shuffle_down(),
+        desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     Key([mod, "control"], "j", lazy.layout.shrink(), desc="Shrink window"),
     Key([mod, "control"], "k", lazy.layout.grow(), desc="Grow window"),
@@ -42,37 +48,93 @@ keys = [
         [mod],
         "a",
         [
-            Key([], "1", lazy.spawn("alacritty -e nvim"), desc="Run neovim"),
-            Key([], "2", lazy.spawn("firefox"), desc="Run firefox"),
-            Key([], "3", lazy.spawn("firefox web.telegram.org"), desc="Run telegram"),
-            Key([], "4", lazy.spawn("alacritty -e vifm"), desc="Run vifm"),
+            Key([], "1", lazy.spawn(
+                f"{terminal} -e nvim"), desc="Run neovim"),
+            Key([], "2", lazy.spawn(f"{browser}"), desc=f"Run {browser}"),
+            Key([], "3", lazy.spawn(
+                f"{browser} web.telegram.org"), desc="Run telegram"),
+            Key([], "4", lazy.spawn(
+                f"{terminal} -e vifm"), desc="Run vifm"),
         ],
     ),
 ]
-workspases = ["a", "b", "c", "d","f","g"]
-groups = [Group(i) for i in workspases]
+workspases = zip(["a", "b", "c", "d", "f", "g"], [0, 0, 0, 1, 1, 1])
+groups = [Group(i, screen_affinity=a) for i, a in workspases]
 
 
+def go_to_group(name: str):
+    def _inner(qtile):
+        if len(qtile.screens) == 1:
+            qtile.groups_map[name].toscreen()
+            return
+
+        if name in 'abc':
+            qtile.focus_screen(0)
+            qtile.groups_map[name].toscreen()
+        else:
+            qtile.focus_screen(1)
+            qtile.groups_map[name].toscreen()
+
+    return _inner
+
+
+def go_to_group_and_move_window(name: str):
+    def _inner(qtile):
+        if len(qtile.screens) == 1:
+            qtile.current_window.togroup(name, switch_group=True)
+            return
+
+        if name in "abc":
+            qtile.current_window.togroup(name, switch_group=False)
+            qtile.focus_screen(0)
+            qtile.groups_map[name].toscreen()
+        else:
+            qtile.current_window.togroup(name, switch_group=False)
+            qtile.focus_screen(1)
+            qtile.groups_map[name].toscreen()
+
+    return _inner
+
+
+def move_window(name: str):
+    def _inner(qtile):
+        if len(qtile.screens) == 1:
+            qtile.current_window.togroup(name, switch_group=True)
+            return
+
+        if name in "123":
+            qtile.current_window.togroup(name, switch_group=False)
+            qtile.groups_map[name].toscreen()
+        else:
+            qtile.current_window.togroup(name, switch_group=False)
+            qtile.groups_map[name].toscreen()
+
+    return _inner
+
+
+for i in groups:
+    keys.append(Key([mod, "shift"], i.name, lazy.function(
+        go_to_group_and_move_window(i.name))))
 for j, i in enumerate(groups, 1):
     keys.extend(
         [
             Key(
                 [mod],
                 str(j),
-                lazy.group[i.name].toscreen(),
+                lazy.function(go_to_group(i.name)),
                 desc="Switch to group {}".format(i.name),
             ),
             Key(
                 [mod, "shift"],
                 str(j),
-                lazy.window.togroup(i.name, switch_group=True),
+                lazy.function(go_to_group_and_move_window(i.name)),
                 desc="Switch to & move focused window to group {}".format(
                     i.name),
             ),
             Key(
                 [mod, "control"],
                 str(j),
-                lazy.window.togroup(i.name, switch_group=False),
+                lazy.function(move_window(i.name)),
                 desc="Switch to & move focused window to group {}".format(
                     i.name),
             ),

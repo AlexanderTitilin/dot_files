@@ -3,6 +3,8 @@ lspconfig.texlab.setup {}
 lspconfig.gdscript.setup {}
 lspconfig.pylsp.setup {}
 lspconfig.ccls.setup{}
+lspconfig.hls.setup{}
+lspconfig.racket_langserver.setup{}
 lspconfig.elixirls.setup{
 	cmd={"elixir-ls"},
 	    settings = {
@@ -12,3 +14,4 @@ lspconfig.elixirls.setup{
         }
     }
 }
+require'lspconfig'.ccls.setup{}

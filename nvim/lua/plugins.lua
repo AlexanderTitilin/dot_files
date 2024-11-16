@@ -15,6 +15,15 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
 {
+	  "chentoast/marks.nvim",
+	  event = "VeryLazy",
+	  opts = {},
+},
+{
+	"milanglacier/yarepl.nvim",
+	config = true
+},
+{
   "NeogitOrg/neogit",
   dependencies = {
     "nvim-lua/plenary.nvim",         
@@ -42,17 +51,6 @@ require('lazy').setup({
     opts = {}
 },
 
-{
-  'nvim-orgmode/orgmode',
-  event = 'VeryLazy',
-  ft = { 'org' },
-  config = function()
-    require('orgmode').setup({
-      org_agenda_files = '~/orgfiles/**/*',
-      org_default_notes_file = '~/orgfiles/refile.org',
-    })
-  end,
-},
     { 'norcalli/nvim-colorizer.lua',
     	config = function()
 	    require("colorizer").setup()
@@ -73,13 +71,16 @@ require('lazy').setup({
     		{options ={ theme="gruvbox-material" }} },
     { 'quangnguyen30192/cmp-nvim-ultisnips' },
     { 'numToStr/Comment.nvim',opts={} },
-    { 'windwp/nvim-autopairs',opts = {} },
+    { 'm4xshen/autoclose.nvim',
+    opts = {
+    }},
     { 'nvim-telescope/telescope.nvim',opts = {}, dependencies = { 'nvim-lua/plenary.nvim' }},
     { 'is0n/jaq-nvim', opts =
     { cmds = {
 	    external = {
 		    python = "python %",
-		    cpp = "g++ % -o $fileBase -O2 -lfinal && $fileBase",
+		    cpp = "c++ % -o $fileBase  && ./$fileBase",
+		    c = "gcc % -o $fileBase  && ./$fileBase",
 		    javascript = "node %",
 		    scheme = "racket %",
 		    racket = "racket %",
@@ -117,11 +118,21 @@ require('lazy').setup({
      },
     { 'nvim-tree/nvim-web-devicons' },
     { 'lervag/vimtex', config = function()
-vim.g.UltiSnipsExpandTrigger = '<tab>'
-vim.g.UltiSnipsJumpForwardTrigger = '<tab>'
-vim.g.UltiSnipsJumpBackwardTrigger = '<s-tab>'
+
+vim.g.tex_flavor = 'latex'
+vim.g.vimtex_quickfix_mode = 0
+vim.g.vimtex_view_method = 'zathura'
+vim.g.vimtex_compiler_progname = 'nvr'
+vim.g.vimtex_compiler_method = 'latexmk'
+vim.g.vimtex_compiler_latexmk_engines = { ['_'] = '-lualatex' }
+vim.g.tex_conceal = 'abdmg'
+
     end},
-    { 'SirVer/ultisnips' },
+    { 'SirVer/ultisnips',config = function()
+	    vim.g.UltiSnipsExpandTrigger = '<tab>'
+	    vim.g.UltiSnipsJumpForwardTrigger = '<tab>'
+	    vim.g.UltiSnipsJumpBackwardTrigger = '<s-tab>'
+    end},
 })
 
 

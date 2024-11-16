@@ -56,4 +56,27 @@ screens = [
                 widget.TextBox("  "),],
             35,
         ), ),
+    Screen(
+        top=bar.Bar(
+            [
+                widget.TextBox("  "),
+                widget.GroupBox(
+                    padding=1,
+                    font="Iosevka Mono Nerd Font",
+                    highlight_method="line",
+                    highlight_color=[colors.color3, colors.color3],
+                    this_current_screen_border=colors.color7,
+                    urgent_border=colors.color9,
+                    disable_drag=True,
+                    hide_unused=True,
+                ),
+                widget.Spacer(),
+                widget.Clock(format="%H:%M",
+                             foreground=colors.color7),
+                widget.Spacer(),
+                widget.Battery(discharge_char="󰁹", charge_char="󰂄",
+                               format="{char}|{percent:2.0%}", ),
+                widget.TextBox("  "),],
+            35,
+        ), )
 ]

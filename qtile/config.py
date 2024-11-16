@@ -24,5 +24,5 @@ def autostart():
 
 auto_minimize = True
 reconfigure_screens = False
-wl_input_rules = None
+wl_input = None
 wmname = "LG3D"

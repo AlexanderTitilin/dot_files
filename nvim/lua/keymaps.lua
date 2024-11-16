@@ -14,3 +14,6 @@ vim.api.nvim_set_keymap('n', '<Leader>dc', '<Cmd>lua require"dap".continue()<CR>
 vim.api.nvim_set_keymap('n', '<Leader>dn', '<Cmd>lua require"dap".step_over()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>di', '<Cmd>lua require"dap".step_into()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>cn', '<Cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>sl', ':REPLSendLine<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<Leader>sv', '<Plug>(REPLSendVisual-ipython)', { noremap = true, silent = true })
