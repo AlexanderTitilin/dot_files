@@ -1,14 +1,17 @@
-import os
 import subprocess
-
+import autostart
 from libqtile import hook
 from keys import *
+from autostart import *
 from bar import *
 from layouts import *
 from libqtile.backend.wayland import InputConfig
+import os
+
+
 
 dgroups_key_binder = None
-dgroups_app_rules = []  
+dgroups_app_rules = []
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = True
@@ -17,12 +20,14 @@ focus_on_window_activation = "smart"
 reconfigure_screens = True
 
 
-@hook.subscribe.startup_once
-def autostart():
-    home = os.path.expanduser("~/.config/qtile/autostart.sh")
-    subprocess.run([home])
 
 auto_minimize = True
 reconfigure_screens = False
-wl_input = None
+
+wl_input_rules = {
+    "type:keyboard": InputConfig(
+        kb_layout="us,ru",
+        kb_options="grp:caps_toggle"
+    )
+}
 wmname = "LG3D"

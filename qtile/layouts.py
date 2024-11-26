@@ -2,13 +2,13 @@ from libqtile import layout
 
 layout_config = {
     "border_width": 0,
-    "border_focus": '#957FB8',
+    "border_focus": "#d8a657",
     "border_normal": '#1F1F28',
-    "ratio": 0.53,
+    "ratio": 0.5,
 }
 layouts = [
-    layout.MonadTall(**layout_config),
-    layout.Stack(**layout_config),
+    layout.Spiral(new_client_position="after_current", **layout_config),
+    # layout.MonadTall(**layout_config),
     layout.MonadWide(**layout_config),
 ]
 floating_layout = layout.Floating(border_width=0)

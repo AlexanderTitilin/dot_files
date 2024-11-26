@@ -1,13 +1,56 @@
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.config import Click, Drag, Group, Key, KeyChord
+import copy
 from libqtile import qtile
-from copy import deepcopy
+backend = qtile.core.name
 mod = "mod4"
 terminal = "alacritty"
-launcher_command = 'rofi -font "JetBrais Mono 20" -show run'
+screenshot = "flameshot gui"
+launcher_command = 'rofi -font "Ubuntu Nerd Mono 20" -show drun'
+if backend == "wayland":
+    launcher_command = "wofi --show drun"
 browser = "firefox"
 
+
+translation = {
+    "f": "Cyrillic_A",
+    ",": "Cyrillic_BE",
+    "w": "Cyrillic_TSE",
+    "l": "Cyrillic_DE",
+    "t": "Cyrillic_IE",
+    'a': "Cyrillic_EF",
+    'u': "Cyrillic_GHE",
+    "[": "Cyrillic_HA",
+    "b": "Cyrillic_I",
+    "q": "Cyrillic_SHORTI",
+    "r": "Cyrillic_KA",
+    "k": "Cyrillic_EL",
+    "v": "Cyrillic_EM",
+    "y": "Cyrillic_EN",
+    "j": "Cyrillic_O",
+    "g": "Cyrillic_PE",
+    "z": "Cyrillic_YA",
+    "h": "Cyrillic_ER",
+    "c": "Cyrillic_ES",
+    "n": "Cyrillic_TE",
+    ".": "Cyrillic_U",
+    ";": "Cyrillic_ZHE",
+    "d": "Cyrillic_VE",
+    "m": "Cyrillic_SOFTSIGN",
+    "s": "Cyrillic_YERU",
+    "p": "Cyrillic_ZE",
+    "i": "Cyrillic_SHA",
+    "'": "Cyrillic_E",
+    "o": "Cyrillic_SHCHA",
+    "x": "Cyrillic_CHE",
+}
+
+
+def translate_key(key):
+    key = copy.copy(key)
+    key.key = translation[key.key]
+    return key
 
 
 keys = [
@@ -38,6 +81,7 @@ keys = [
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
     Key([mod], "d", lazy.spawn(launcher_command), desc="Run rofi"),
+    Key([mod], "p", lazy.spawn(screenshot), desc="Run flameshot"),
     Key(
         [mod], "0", lazy.spawn(
             "rofi -show power-menu -modi power-menu:rofi-power-menu"),
@@ -55,10 +99,15 @@ keys = [
                 f"{browser} web.telegram.org"), desc="Run telegram"),
             Key([], "4", lazy.spawn(
                 f"{terminal} -e vifm"), desc="Run vifm"),
+            Key([], "5", lazy.spawn(
+                f"{terminal} -e ipython"), desc="Run ipython"),
         ],
     ),
+    Key([mod], "c", lazy.spawncmd())
 ]
-workspases = zip(["a", "b", "c", "d", "f", "g"], [0, 0, 0, 1, 1, 1])
+if backend == "wayland":
+    keys += [translate_key(key) for key in keys if key.key in translation]
+workspases = zip(map(str, range(1, 7)), [0, 0, 0, 1, 1, 1])
 groups = [Group(i, screen_affinity=a) for i, a in workspases]
 
 
