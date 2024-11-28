@@ -101,94 +101,57 @@ keys = [
                 f"{terminal} -e vifm"), desc="Run vifm"),
             Key([], "5", lazy.spawn(
                 f"{terminal} -e ipython"), desc="Run ipython"),
+            Key([], "w", lazy.spawn(
+                f"{terminal} -e nmtui-connect"), desc="Run nmtui"),
         ],
+    ),
+    KeyChord(
+        [mod],
+        "r",
+        [
+            Key([], "j",
+                lazy.layout.shrink_main().when(
+                    layout=("spiral", "monadwide"))),
+            Key([], "k", lazy.layout.grow_main().when(
+                layout=("spiral", "monadwide"))),
+            Key([], "h", lazy.layout.grow_left()),
+            Key([], "l", lazy.layout.grow_right()),
+            Key([], "n", lazy.layout.normalize()),
+        ],
+        mode=True
     ),
     Key([mod], "c", lazy.spawncmd())
 ]
 if backend == "wayland":
     keys += [translate_key(key) for key in keys if key.key in translation]
-workspases = zip(map(str, range(1, 7)), [0, 0, 0, 1, 1, 1])
-groups = [Group(i, screen_affinity=a) for i, a in workspases]
-
-
-def go_to_group(name: str):
-    def _inner(qtile):
-        if len(qtile.screens) == 1:
-            qtile.groups_map[name].toscreen()
-            return
-
-        if name in 'abc':
-            qtile.focus_screen(0)
-            qtile.groups_map[name].toscreen()
-        else:
-            qtile.focus_screen(1)
-            qtile.groups_map[name].toscreen()
-
-    return _inner
-
-
-def go_to_group_and_move_window(name: str):
-    def _inner(qtile):
-        if len(qtile.screens) == 1:
-            qtile.current_window.togroup(name, switch_group=True)
-            return
-
-        if name in "abc":
-            qtile.current_window.togroup(name, switch_group=False)
-            qtile.focus_screen(0)
-            qtile.groups_map[name].toscreen()
-        else:
-            qtile.current_window.togroup(name, switch_group=False)
-            qtile.focus_screen(1)
-            qtile.groups_map[name].toscreen()
-
-    return _inner
-
-
-def move_window(name: str):
-    def _inner(qtile):
-        if len(qtile.screens) == 1:
-            qtile.current_window.togroup(name, switch_group=True)
-            return
-
-        if name in "123":
-            qtile.current_window.togroup(name, switch_group=False)
-            qtile.groups_map[name].toscreen()
-        else:
-            qtile.current_window.togroup(name, switch_group=False)
-            qtile.groups_map[name].toscreen()
-
-    return _inner
-
+groups = [Group(str(w)) for w in range(1,7)]
 
 for i in groups:
-    keys.append(Key([mod, "shift"], i.name, lazy.function(
-        go_to_group_and_move_window(i.name))))
-for j, i in enumerate(groups, 1):
     keys.extend(
         [
             Key(
                 [mod],
-                str(j),
-                lazy.function(go_to_group(i.name)),
-                desc="Switch to group {}".format(i.name),
+                i.name,
+                lazy.group[i.name].toscreen(),
+                desc=f"Switch to group {i.name}",
             ),
+
             Key(
                 [mod, "shift"],
-                str(j),
-                lazy.function(go_to_group_and_move_window(i.name)),
-                desc="Switch to & move focused window to group {}".format(
-                    i.name),
+                i.name,
+                lazy.window.togroup(i.name, switch_group=True),
+                desc=f"Switch to & move focused window to group {i.name}",
             ),
+
             Key(
                 [mod, "control"],
-                str(j),
-                lazy.function(move_window(i.name)),
-                desc="Switch to & move focused window to group {}".format(
-                    i.name),
+                i.name,
+                lazy.window.togroup(i.name, switch_group=False),
+                desc=f"Switch to  to group {i.name}",
             ),
         ]
     )
+
 
 mouse = [
     Drag(

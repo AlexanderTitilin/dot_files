@@ -15,6 +15,29 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
 {
+    "kawre/leetcode.nvim",
+    build = ":TSUpdate html",
+    dependencies = {
+        "nvim-telescope/telescope.nvim",
+        "nvim-lua/plenary.nvim", -- required by telescope
+        "MunifTanjim/nui.nvim",
+
+        "nvim-treesitter/nvim-treesitter",
+        "rcarriga/nvim-notify",
+        "nvim-tree/nvim-web-devicons",
+    },
+    opts = {
+	    lang = "python",
+    },
+},
+{
+  "startup-nvim/startup.nvim",
+  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope-file-browser.nvim" },
+  config = function()
+    require "startup".setup()
+  end
+},
+{
 	  "chentoast/marks.nvim",
 	  event = "VeryLazy",
 	  opts = {},

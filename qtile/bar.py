@@ -1,4 +1,5 @@
 from libqtile import widget, bar
+from libqtile.lazy import lazy
 from libqtile.config import Screen
 from dataclasses import dataclass
 from keys import backend
@@ -51,34 +52,11 @@ screens = [
                 widget.Clock(format="%H:%M",
                              foreground=colors.color7),
                 widget.Spacer(),
-                widget.Battery(discharge_char="󰁹", charge_char="󰂄",
-                               format="{char}|{percent:2.0%}", ),
-                widget.TextBox("  "),
-                widget.Systray(icon_size=30)],
-            35,
-        ), ),
-    Screen(
-        top=bar.Bar(
-            [
-                widget.TextBox("  "),
-                widget.GroupBox(
-                    padding=1,
-                    font="Iosevka Mono Nerd Font",
-                    highlight_method="line",
-                    highlight_color=[colors.color3, colors.color3],
-                    this_current_screen_border=colors.color7,
-                    urgent_border=colors.color9,
-                    disable_drag=True,
-                    hide_unused=True,
-                ),
-                widget.Spacer(),
-                widget.Clock(format="%H:%M",
-                             foreground=colors.color7),
-                widget.Spacer(),
                 widget.Wlan(),
                 widget.Battery(discharge_char="󰁹", charge_char="󰂄",
                                format="{char}|{percent:2.0%}", ),
-                widget.TextBox("  "),],
+                widget.TextBox("  "),
+                ],
             35,
-        ), )
+        ), ),
 ]

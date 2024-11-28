@@ -8,7 +8,6 @@ layout_config = {
 }
 layouts = [
     layout.Spiral(new_client_position="after_current", **layout_config),
-    # layout.MonadTall(**layout_config),
     layout.MonadWide(**layout_config),
 ]
 floating_layout = layout.Floating(border_width=0)
