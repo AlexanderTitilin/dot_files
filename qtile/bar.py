@@ -1,8 +1,6 @@
 from libqtile import widget, bar
-from libqtile.lazy import lazy
 from libqtile.config import Screen
 from dataclasses import dataclass
-from keys import backend
 
 
 @dataclass(frozen=True, order=False)
@@ -23,7 +21,7 @@ class Colors():
 colors = Colors()
 
 widget_defaults = dict(font="JetBrains Mono Nerd Font ",
-                       fontsize=15 if backend == "wayland" else 30,
+                       fontsize=30,
                        padding=3,
                        padding_x=1,
                        background=colors.color3,
@@ -39,7 +37,6 @@ screens = [
                 widget.Prompt(),
                 widget.GroupBox(
                     padding=1,
-                    font="Iosevka Mono Nerd Font",
                     highlight_method="line",
                     highlight_color=[colors.color3, colors.color3],
                     this_current_screen_border=colors.color7,
@@ -56,7 +53,9 @@ screens = [
                 widget.Battery(discharge_char="󰁹", charge_char="󰂄",
                                format="{char}|{percent:2.0%}", ),
                 widget.TextBox("  "),
-                ],
-            35,
-        ), ),
+            ],
+            33,
+        ),
+        wallpaper="~/.config/qtile/wallpaper.jpg",
+        wallpaper_mode="fill"),
 ]

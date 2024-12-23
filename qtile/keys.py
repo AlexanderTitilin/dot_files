@@ -8,8 +8,6 @@ mod = "mod4"
 terminal = "alacritty"
 screenshot = "flameshot gui"
 launcher_command = 'rofi -font "Ubuntu Nerd Mono 20" -show drun'
-if backend == "wayland":
-    launcher_command = "wofi --show drun"
 browser = "firefox"
 
 
@@ -75,8 +73,6 @@ keys = [
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(),
         desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-    Key([mod, "control"], "j", lazy.layout.shrink(), desc="Shrink window"),
-    Key([mod, "control"], "k", lazy.layout.grow(), desc="Grow window"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
@@ -104,6 +100,7 @@ keys = [
             Key([], "w", lazy.spawn(
                 f"{terminal} -e nmtui-connect"), desc="Run nmtui"),
         ],
+        desc="App launcher mode"
     ),
     KeyChord(
         [mod],
@@ -111,20 +108,21 @@ keys = [
         [
             Key([], "j",
                 lazy.layout.shrink_main().when(
-                    layout=("spiral", "monadwide"))),
+                    layout=("spiral", "monadwide")),
+                desc="Shrink main window"),
             Key([], "k", lazy.layout.grow_main().when(
-                layout=("spiral", "monadwide"))),
-            Key([], "h", lazy.layout.grow_left()),
-            Key([], "l", lazy.layout.grow_right()),
-            Key([], "n", lazy.layout.normalize()),
+                layout=("spiral", "monadwide")),
+                desc = "Grow main window"),
+            # Key([], "h", lazy.layout.grow_left()),
+            # Key([], "l", lazy.layout.grow_right()),
+            # Key([], "n", lazy.layout.normalize()),
         ],
-        mode=True
+        mode=True,
+        desc="Resize mode"
     ),
-    Key([mod], "c", lazy.spawncmd())
+    Key([mod], "c", lazy.spawncmd(), desc="Run promt widget")
 ]
-if backend == "wayland":
-    keys += [translate_key(key) for key in keys if key.key in translation]
-groups = [Group(str(w)) for w in range(1,7)]
+groups = [Group(str(w)) for w in range(1, 7)]
 
 for i in groups:
     keys.extend(
