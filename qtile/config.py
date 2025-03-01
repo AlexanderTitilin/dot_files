@@ -8,7 +8,6 @@ from layouts import *
 import os
 
 
-
 dgroups_key_binder = None
 dgroups_app_rules = []
 follow_mouse_focus = True
@@ -19,13 +18,12 @@ focus_on_window_activation = "smart"
 reconfigure_screens = False
 
 
-
 auto_minimize = True
 
+
 wl_input_rules = {
-    # "type:keyboard": InputConfig(
-    #     kb_layout="us,ru",
-    #     kb_options="grp:caps_toggle"
-    # )
 }
+if qtile.core.name == "wayland":
+    from wl_input import *
+
 wmname = "LG3D"

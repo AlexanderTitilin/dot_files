@@ -15,27 +15,47 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
 {
-    "kawre/leetcode.nvim",
-    build = ":TSUpdate html",
-    dependencies = {
-        "nvim-telescope/telescope.nvim",
-        "nvim-lua/plenary.nvim", -- required by telescope
-        "MunifTanjim/nui.nvim",
-
-        "nvim-treesitter/nvim-treesitter",
-        "rcarriga/nvim-notify",
-        "nvim-tree/nvim-web-devicons",
-    },
-    opts = {
-	    lang = "python",
-    },
+  'kristijanhusak/vim-dadbod-ui',
+  dependencies = {
+    { 'tpope/vim-dadbod', lazy = true },
+    { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true }, -- Optional
+  },
+  cmd = {
+    'DBUI',
+    'DBUIToggle',
+    'DBUIAddConnection',
+    'DBUIFindBuffer',
+  },
+  init = function()
+    -- Your DBUI configuration
+    vim.g.db_ui_use_nerd_fonts = 1
+    vim.g.db_ui_execute_on_save = 0
+	vim.g.db_ui_show_database_icon = 1
+	vim.g.db_ui_auto_execute_table_helpers = 1
+  end,
 },
 {
-  "startup-nvim/startup.nvim",
-  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope-file-browser.nvim" },
-  config = function()
-    require "startup".setup()
-  end
+	'nvim-tree/nvim-tree.lua',
+	opts = {
+		view = {
+			float = {
+				enable = true
+			},
+		}
+	}
+},
+{
+	"micangl/cmp-vimtex"
+},
+{
+  "S1M0N38/love2d.nvim",
+  cmd = "LoveRun",
+  opts = { },
+  keys = {
+    { "<leader>vs", ft = "lua", desc = "LÖVE" },
+    { "<leader>vv", "<cmd>LoveRun<cr>", ft = "lua", desc = "Run LÖVE" },
+    { "<leader>vs", "<cmd>LoveStop<cr>", ft = "lua", desc = "Stop LÖVE" },
+  },
 },
 {
 	  "chentoast/marks.nvim",
@@ -49,10 +69,9 @@ require('lazy').setup({
 {
   "NeogitOrg/neogit",
   dependencies = {
-    "nvim-lua/plenary.nvim",         
-    "sindrets/diffview.nvim",        
-
-    "nvim-telescope/telescope.nvim", 
+    "nvim-lua/plenary.nvim",
+    "sindrets/diffview.nvim",
+    "nvim-telescope/telescope.nvim",
   },
   config = true
 },
@@ -79,16 +98,16 @@ require('lazy').setup({
 	    require("colorizer").setup()
     	end
    },
-    { 'mfussenegger/nvim-dap' },
-    { 'mfussenegger/nvim-dap-python', config = function()
-	    				require("dap-python").setup("python")
-    					end},
     { 'rebelot/kanagawa.nvim' },
     { 'jghauser/mkdir.nvim' },
     { 'Pocco81/auto-save.nvim',opts = {} },
     { 'kylechui/nvim-surround',opts = {} },
-    { 'kyazdani42/nvim-tree.lua',opts = {} },
-    { 'alvarosevilla95/luatab.nvim',opts = {} },
+    { 'alvarosevilla95/luatab.nvim',
+    	opts = {
+		separator = function ()
+			return "--"
+		end
+	} },
     { 'nvim-lualine/lualine.nvim',
     	opts =
     		{options ={ theme="gruvbox-material" }} },
@@ -111,7 +130,8 @@ require('lazy').setup({
 		    haskell = "stack ghc % && ./$fileBase",
 		    html = "firefox %",
 		    java = "java %",
-		    lua = "lua %"
+		    lua = "lua %",
+		    go = "go run %"
 	    }
     },
     ui = {
@@ -142,13 +162,13 @@ require('lazy').setup({
     { 'nvim-tree/nvim-web-devicons' },
     { 'lervag/vimtex', config = function()
 
-vim.g.tex_flavor = 'latex'
-vim.g.vimtex_quickfix_mode = 0
-vim.g.vimtex_view_method = 'zathura'
-vim.g.vimtex_compiler_progname = 'nvr'
-vim.g.vimtex_compiler_method = 'latexmk'
-vim.g.vimtex_compiler_latexmk_engines = { ['_'] = '-lualatex' }
-vim.g.tex_conceal = 'abdmg'
+	vim.g.tex_flavor = 'latex'
+	vim.g.vimtex_quickfix_mode = 0
+	vim.g.vimtex_view_method = 'zathura'
+	vim.g.vimtex_compiler_progname = 'nvr'
+	vim.g.vimtex_compiler_method = 'latexmk'
+	vim.g.vimtex_compiler_latexmk_engines = { ['_'] = '-lualatex' }
+	vim.g.tex_conceal = 'abdmg'
 
     end},
     { 'SirVer/ultisnips',config = function()

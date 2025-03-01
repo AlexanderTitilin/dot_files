@@ -1,4 +1,4 @@
-from libqtile import widget, bar
+from libqtile import widget, bar, qtile
 from libqtile.config import Screen
 from dataclasses import dataclass
 
@@ -21,7 +21,7 @@ class Colors():
 colors = Colors()
 
 widget_defaults = dict(font="JetBrains Mono Nerd Font ",
-                       fontsize=30,
+                       fontsize=25 if qtile.core.name == "wayland" else 30,
                        padding=3,
                        padding_x=1,
                        background=colors.color3,

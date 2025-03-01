@@ -7,13 +7,19 @@ vim.api.nvim_set_keymap('n', '<Leader>j', ':tabprevious<CR>', { noremap = true, 
 vim.api.nvim_set_keymap('n', '<Leader>k', ':tabnext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>r', ':Jaq terminal<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>t', ':tabnew<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>f', ':NvimTreeFocus<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>F', ':Telescope find_files<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>db', '<Cmd>lua require"dap".toggle_breakpoint()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>dc', '<Cmd>lua require"dap".continue()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>dn', '<Cmd>lua require"dap".step_over()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>di', '<Cmd>lua require"dap".step_into()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>ff', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>fp', ':NvimTreeOpen ~/projects<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>fn', ':NvimTreeOpen ~/.config/nvim/lua<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>cn', '<Cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "gt", "<cmd>tab split | lua vim.lsp.buf.definition()<CR>", {})
 vim.api.nvim_set_keymap('n', '<Leader>sl', ':REPLSendLine<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<Leader>sv', '<Plug>(REPLSendVisual-ipython)', { noremap = true, silent = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "rust",
+    callback = function()
+        vim.api.nvim_set_keymap("n", "cr", ":!cargo run<CR>", { noremap = true, silent = false })
+        vim.api.nvim_set_keymap("n", "ct", ":!cargo test<CR>", { noremap = true, silent = false })
+    end
+})

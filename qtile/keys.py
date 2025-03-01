@@ -1,13 +1,19 @@
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
-from libqtile.config import Click, Drag, Group, Key, KeyChord
+from libqtile.config import Click, Drag, Group, Key, KeyChord, Match
 import copy
 from libqtile import qtile
 backend = qtile.core.name
 mod = "mod4"
 terminal = "alacritty"
 screenshot = "flameshot gui"
+screenshot_flag = False
 launcher_command = 'rofi -font "Ubuntu Nerd Mono 20" -show drun'
+powermenu_command = "rofi -show power-menu -modi power-menu:rofi-power-menu"
+if qtile.core.name == "wayland":
+    launcher_command = 'wofi  --show drun'
+    screenshot = 'grim -g "$(slurp)"  - | wl-copy'
+    screenshot_flag = True
 browser = "firefox"
 
 
@@ -76,11 +82,12 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod], "d", lazy.spawn(launcher_command), desc="Run rofi"),
-    Key([mod], "p", lazy.spawn(screenshot), desc="Run flameshot"),
+    Key([mod], "d", lazy.spawn(launcher_command), desc="Run launcher"),
+    Key([mod], "p", lazy.spawn(screenshot,
+        shell=screenshot_flag), desc="Run screenshot"),
     Key(
         [mod], "0", lazy.spawn(
-            "rofi -show power-menu -modi power-menu:rofi-power-menu"),
+            powermenu_command),
         desc="Run rofi-power-menu"),
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod], "b", lazy.hide_show_bar(), desc="Hide bar"),
@@ -112,7 +119,7 @@ keys = [
                 desc="Shrink main window"),
             Key([], "k", lazy.layout.grow_main().when(
                 layout=("spiral", "monadwide")),
-                desc = "Grow main window"),
+                desc="Grow main window"),
             # Key([], "h", lazy.layout.grow_left()),
             # Key([], "l", lazy.layout.grow_right()),
             # Key([], "n", lazy.layout.normalize()),
@@ -122,8 +129,9 @@ keys = [
     ),
     Key([mod], "c", lazy.spawncmd(), desc="Run promt widget")
 ]
+keys.extend([translate_key(key)
+            for key in keys if key.key in translation.keys()])
 groups = [Group(str(w)) for w in range(1, 7)]
-
 for i in groups:
     keys.extend(
         [
@@ -150,7 +158,8 @@ for i in groups:
         ]
     )
 
-
+groups.append(Group("hiddify", matches=[Match(wm_class="Hiddify")]))
+keys.append(Key([mod], "v", lazy.group[groups[-1].name].toscreen()))
 mouse = [
     Drag(
         [mod],
