@@ -15,6 +15,10 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
 {
+	"windwp/nvim-ts-autotag",
+	opts = {}
+},
+{
   'kristijanhusak/vim-dadbod-ui',
   dependencies = {
     { 'tpope/vim-dadbod', lazy = true },
