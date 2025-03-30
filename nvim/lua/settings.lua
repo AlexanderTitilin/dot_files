@@ -10,5 +10,7 @@ vim.opt.termguicolors = true
 vim.opt.relativenumber = true
 vim.opt.guifont = "JetBrainsMono Nerd Font:h14"
 vim.opt.completeopt = { 'menu', 'menuone' }
-
-
+vim.opt.tabstop=4
+vim.opt.shiftwidth=4
+vim.opt.expandtab = true
+vim.opt.linebreak = true

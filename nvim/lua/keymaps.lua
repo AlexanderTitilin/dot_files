@@ -16,6 +16,7 @@ vim.api.nvim_set_keymap("n", "gt", "<cmd>tab split | lua vim.lsp.buf.definition(
 vim.api.nvim_set_keymap('n', '<Leader>sl', ':REPLSendLine<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<Leader>sv', '<Plug>(REPLSendVisual-ipython)', { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap('n', '<Leader>fr', ':Telescope oldfiles<CR>', { noremap = true, silent = true })
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "rust",
     callback = function()

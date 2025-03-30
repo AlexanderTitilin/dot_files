@@ -6,6 +6,7 @@ lspconfig.ccls.setup{}
 lspconfig.gopls.setup{}
 lspconfig.lua_ls.setup{
 	    Lua = {
+	diagnostics = {"vim"},
       workspace = {
         checkThirdParty = false,
         telemetry = { enable = false },
@@ -34,3 +35,6 @@ lspconfig.rust_analyzer.setup{
     }
   }
 }
+vim.diagnostic.config({
+  virtual_text = false, 
+})

@@ -20,8 +20,7 @@ cmp.setup({
         { name = 'ultisnips' },
         { name = 'buffer' },
         { name = 'path' },
-	{name = 'orgmode'},
-	{name = 'vimtex'},
-	{name = 'vim-dadbod-completion'}
-    }
+        {name = 'vimtex'},
+        {name = 'vim-dadbod-completion'}
+}
 })

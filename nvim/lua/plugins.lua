@@ -15,8 +15,30 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
 {
-	"windwp/nvim-ts-autotag",
-	opts = {}
+    "nanozuki/tabby.nvim",
+    opts ={
+        preset = 'tab_only',
+    }
+},
+{
+        'sontungexpt/better-diagnostic-virtual-text',
+        opts = {
+            ui = {
+                    wrap_line_after = true,
+                   left_kept_space = 3,
+                    right_kept_space = 3,
+                    arrow = "  ",
+                    up_arrow = "  ",
+                    down_arrow = "  ",
+                    above = false,
+                },
+                priority = 2003,
+                inline = true,
+        }
+},
+{
+    "mrcjkb/haskell-tools.nvim",
+    lazy = false
 },
 {
   'kristijanhusak/vim-dadbod-ui',
@@ -106,15 +128,9 @@ require('lazy').setup({
     { 'jghauser/mkdir.nvim' },
     { 'Pocco81/auto-save.nvim',opts = {} },
     { 'kylechui/nvim-surround',opts = {} },
-    { 'alvarosevilla95/luatab.nvim',
-    	opts = {
-		separator = function ()
-			return "--"
-		end
-	} },
     { 'nvim-lualine/lualine.nvim',
     	opts =
-    		{options ={ theme="gruvbox-material" }} },
+    		{options ={ theme="gruvbox_dark" }} },
     { 'quangnguyen30192/cmp-nvim-ultisnips' },
     { 'numToStr/Comment.nvim',opts={} },
     { 'm4xshen/autoclose.nvim',
@@ -131,7 +147,7 @@ require('lazy').setup({
 		    scheme = "racket %",
 		    racket = "racket %",
 		    lisp = "sbcl --load %",
-		    haskell = "stack ghc % && ./$fileBase",
+		    haskell = "ghc % && ./$fileBase",
 		    html = "firefox %",
 		    java = "java %",
 		    lua = "lua %",
