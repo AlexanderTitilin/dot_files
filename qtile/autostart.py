@@ -1,7 +1,7 @@
 import os
 import subprocess
 from libqtile import hook, qtile
-
+from libqtile.utils import send_notification
 
 @hook.subscribe.startup_once
 def autostart():
@@ -10,3 +10,5 @@ def autostart():
         autostart_script = "autostart_wayland.sh"
     home = os.path.expanduser(f"~/.config/qtile/{autostart_script}")
     subprocess.Popen([home])
+
+        

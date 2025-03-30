@@ -1,6 +1,7 @@
 import subprocess
 import autostart
 from libqtile import hook
+from libqtile.utils import send_notification
 from keys import *
 from autostart import *
 from bar import *

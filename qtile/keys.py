@@ -8,7 +8,7 @@ mod = "mod4"
 terminal = "alacritty"
 screenshot = "flameshot gui"
 screenshot_flag = False
-launcher_command = 'rofi -font "Ubuntu Nerd Mono 20" -show drun'
+launcher_command = 'rofi -font "Ubunti Mono 20" -show drun -theme gruvbox-light'
 powermenu_command = "rofi -show power-menu -modi power-menu:rofi-power-menu"
 if qtile.core.name == "wayland":
     launcher_command = 'wofi  --show drun'
@@ -127,10 +127,11 @@ keys = [
         mode=True,
         desc="Resize mode"
     ),
-    Key([mod], "c", lazy.spawncmd(), desc="Run promt widget")
+    Key([mod], "c", lazy.spawncmd(), desc="Run promt widget"),
 ]
 keys.extend([translate_key(key)
             for key in keys if key.key in translation.keys()])
+
 groups = [Group(str(w)) for w in range(1, 7)]
 for i in groups:
     keys.extend(
@@ -157,7 +158,6 @@ for i in groups:
             ),
         ]
     )
-
 groups.append(Group("hiddify", matches=[Match(wm_class="Hiddify")]))
 keys.append(Key([mod], "v", lazy.group[groups[-1].name].toscreen()))
 mouse = [

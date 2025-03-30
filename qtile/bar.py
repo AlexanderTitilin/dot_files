@@ -1,6 +1,7 @@
 from libqtile import widget, bar, qtile
 from libqtile.config import Screen
 from dataclasses import dataclass
+from enum import Enum
 
 
 @dataclass(frozen=True, order=False)
@@ -21,7 +22,7 @@ class Colors():
 colors = Colors()
 
 widget_defaults = dict(font="JetBrains Mono Nerd Font ",
-                       fontsize=25 if qtile.core.name == "wayland" else 30,
+                       fontsize=15 if qtile.core.name == "wayland" else 30,
                        padding=3,
                        padding_x=1,
                        background=colors.color3,
@@ -29,33 +30,34 @@ widget_defaults = dict(font="JetBrains Mono Nerd Font ",
 extension_defaults = widget_defaults.copy()
 
 
+screen = Screen(
+    top=bar.Bar(
+        [
+            widget.TextBox("  "),
+            widget.Prompt(),
+            widget.GroupBox(
+                padding=1,
+                highlight_method="line",
+                highlight_color=[colors.color3, colors.color3],
+                this_current_screen_border=colors.color7,
+                urgent_border=colors.color9,
+                disable_drag=True,
+                hide_unused=True,
+            ),
+            widget.Spacer(),
+            widget.Clock(format="%H:%M",
+                                foreground=colors.color7),
+            widget.Spacer(),
+            widget.Wlan(),
+            widget.Battery(discharge_char="󰁹", charge_char="󰂄",
+                           format="{char}|{percent:2.0%}", ),
+            widget.TextBox("  "),
+        ],
+        33,
+    ),
+    wallpaper="~/.config/qtile/wallpaper.jpg",
+    wallpaper_mode="fill"
+)
 screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.TextBox("  "),
-                widget.Prompt(),
-                widget.GroupBox(
-                    padding=1,
-                    highlight_method="line",
-                    highlight_color=[colors.color3, colors.color3],
-                    this_current_screen_border=colors.color7,
-                    urgent_border=colors.color9,
-                    disable_drag=True,
-                    hide_unused=True,
-                ),
-
-                widget.Spacer(),
-                widget.Clock(format="%H:%M",
-                             foreground=colors.color7),
-                widget.Spacer(),
-                widget.Wlan(),
-                widget.Battery(discharge_char="󰁹", charge_char="󰂄",
-                               format="{char}|{percent:2.0%}", ),
-                widget.TextBox("  "),
-            ],
-            33,
-        ),
-        wallpaper="~/.config/qtile/wallpaper.jpg",
-        wallpaper_mode="fill"),
+    screen
 ]
