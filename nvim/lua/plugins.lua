@@ -11,9 +11,21 @@ if not vim.loop.fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
-
-
 require('lazy').setup({
+{
+    "gennaro-tedesco/nvim-peekup"
+},
+{
+ "windwp/nvim-ts-autotag",
+ init =  function ()
+     require('nvim-ts-autotag').setup(
+         {
+             opts = {
+                enable_close_on_slash = true
+         }}
+     )
+ end
+},
 {
     "nanozuki/tabby.nvim",
     opts ={
@@ -70,9 +82,9 @@ require('lazy').setup({
 		}
 	}
 },
-{
-	"micangl/cmp-vimtex"
-},
+-- {
+-- 	"micangl/cmp-vimtex"
+-- },
 {
   "S1M0N38/love2d.nvim",
   cmd = "LoveRun",
@@ -142,7 +154,7 @@ require('lazy').setup({
 	    external = {
 		    python = "python %",
 		    cpp = "c++ % -o $fileBase  && ./$fileBase",
-		    c = "gcc % -o $fileBase  && ./$fileBase",
+		    c = "gcc % -o $fileBase -lm && ./$fileBase",
 		    javascript = "node %",
 		    scheme = "racket %",
 		    racket = "racket %",
@@ -151,7 +163,8 @@ require('lazy').setup({
 		    html = "firefox %",
 		    java = "java %",
 		    lua = "lua %",
-		    go = "go run %"
+		    go = "go run %",
+            rust = "cargo run"
 	    }
     },
     ui = {

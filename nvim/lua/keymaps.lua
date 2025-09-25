@@ -5,7 +5,7 @@ vim.api.nvim_set_keymap('n', '<Leader>v', ':vsplit ', { noremap = true, silent =
 vim.api.nvim_set_keymap('n', '<Leader>c', ':Neoformat<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>j', ':tabprevious<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>k', ':tabnext<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>r', ':Jaq terminal<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>r', ':Jaq float<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>t', ':tabnew<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>ff', ':NvimTreeFindFile<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>fp', ':NvimTreeOpen ~/projects<CR>', { noremap = true, silent = true })
